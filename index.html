@@ -1,59 +1,174 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>StellaLive 팬 허브</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>스텔라이브 팬 페이지</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f7f7fa;
+      color: #333;
+    }
+    header {
+      background: #6a5acd;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      background: #eee;
+      padding: 0.5rem;
+      text-align: center;
+    }
+    nav button {
+      margin: 0.5rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      background: #6a5acd;
+      color: white;
+      cursor: pointer;
+    }
+    section {
+      display: none;
+      padding: 1rem;
+    }
+    section.active {
+      display: block;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+    .fanart img {
+      width: 30%;
+      margin: 0.5rem;
+      border-radius: 10px;
+    }
+    .cover iframe {
+      width: 100%;
+      height: 300px;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+    footer {
+      background: #eee;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+  </style>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-<header class="topbar">
-  <div class="brand">✨ StellaLive 팬 허브</div>
-  <nav class="nav">
-    <a href="#home" class="nav-link">홈</a>
-    <a href="#members" class="nav-link">멤버</a>
-    <a href="#covers" class="nav-link">커버곡</a>
-    <a href="#fanart" class="nav-link">팬아트</a>
-  </nav>
-</header>
-
-<main id="app">
-  <section id="home" class="route route--active">
-    <div class="hero">
-      <h1>별처럼 빛나는 순간 ✨</h1>
-      <p>스텔라이브 아티스트들을 위한 비공식 팬 허브. 멤버 정보, 커버곡, 팬아트를 한 곳에서.</p>
-      <div class="cta">
-        <a href="#members" class="btn primary">멤버 둘러보기</a>
-        <a href="#fanart" class="btn ghost">오늘의 팬아트</a>
+  <header>
+    <h1>스텔라이브 팬 페이지 🎶</h1>
+    <div id="login-area">
+      <div id="g_id_onload"
+        data-client_id="1055836813442-av7ah6hlknksuon30i77ib6mitjrh7e2.apps.googleusercontent.com"
+        data-callback="handleLogin"
+        data-auto_prompt="false">
       </div>
+      <div class="g_id_signin" data-type="standard"></div>
     </div>
-  </section>
+    <p id="welcome"></p>
+  </header>
 
-  <section id="members" class="route">
-    <h2>멤버</h2>
-    <div id="memberGrid" class="grid"></div>
-  </section>
+  <nav>
+    <button onclick="showSection('home')">홈</button>
+    <button onclick="showSection('vote')">투표</button>
+    <button onclick="showSection('fanart')">팬아트</button>
+    <button onclick="showSection('cover')">커버곡</button>
+  </nav>
 
-  <section id="covers" class="route">
-    <h2>커버곡 플레이리스트</h2>
-    <div id="playlistWrap" class="playlist-wrap"></div>
-    <p class="hint">플레이리스트는 각 멤버 카드를 눌러도 열 수 있어요.</p>
-  </section>
+  <main>
+    <section id="home" class="active">
+      <div class="card">
+        <h2>환영합니다 💜</h2>
+        <p>스텔라이브 팬들을 위한 공식 팬 페이지 베타 버전입니다.</p>
+      </div>
+    </section>
 
-  <section id="fanart" class="route">
-    <h2>오늘의 팬아트</h2>
-    <div id="fanartGrid" class="grid fanart"></div>
-    <p class="hint">이미지는 <code>/assets/images/</code>에 교체 업로드하면 자동 반영됩니다.</p>
-  </section>
-</main>
+    <section id="vote">
+      <div class="card">
+        <h2>투표하기</h2>
+        <p>당신의 최애 멤버에게 투표하세요!</p>
+        <div id="vote-options"></div>
+        <button onclick="submitVote()">투표 제출</button>
+        <p id="vote-result"></p>
+      </div>
+    </section>
 
-<footer class="footer">
-  <span>비공식 팬 프로젝트 · 제작: You</span>
-</footer>
+    <section id="fanart">
+      <div class="card fanart">
+        <h2>오늘의 팬아트 🎨</h2>
+        <div id="fanart-gallery"></div>
+      </div>
+    </section>
 
-<script src="./app.js"></script>
+    <section id="cover">
+      <div class="card cover">
+        <h2>커버곡 🎵</h2>
+        <iframe src="https://www.youtube.com/embed/videoseries?list=PL_D2YrKeYY2UvRIw_SW3lQXzBDO7aBeii"></iframe>
+        <iframe src="https://www.youtube.com/embed/videoseries?list=PLKVNBOcsLJlVii-8YwoZTD3o4gh5CnIND"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 스텔라이브 팬 페이지</p>
+  </footer>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+
+    // 로그인 처리
+    function handleLogin(response) {
+      document.getElementById("welcome").textContent = "환영합니다!";
+    }
+
+    // 투표 데이터
+    const members = ["리코", "부키", "나나", "히나", "칸나", "리제", "유니", "타비", "시로", "린"];
+    let votes = {};
+
+    function renderVotes() {
+      let html = "";
+      members.forEach(m => {
+        html += `<label><input type="checkbox" value="${m}"> ${m}</label><br>`;
+      });
+      document.getElementById("vote-options").innerHTML = html;
+    }
+    renderVotes();
+
+    function submitVote() {
+      const checked = Array.from(document.querySelectorAll("#vote-options input:checked")).map(c => c.value);
+      checked.forEach(m => votes[m] = (votes[m]||0)+1);
+      document.getElementById("vote-result").textContent = "투표 완료! 감사합니다 💜";
+    }
+
+    // 팬아트 랜덤 (샘플)
+    const fanarts = [
+      "https://placekitten.com/400/300",
+      "https://placebear.com/400/300",
+      "https://picsum.photos/400/300"
+    ];
+    function renderFanart() {
+      let container = document.getElementById("fanart-gallery");
+      container.innerHTML = "";
+      fanarts.sort(() => Math.random()-0.5).slice(0,3).forEach(url=>{
+        container.innerHTML += `<img src="${url}">`;
+      });
+    }
+    renderFanart();
+  </script>
 </body>
 </html>
+
