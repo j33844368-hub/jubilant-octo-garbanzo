@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StellaLive 팬 허브</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">✨ StellaLive 팬 허브</div>
+  <nav class="nav">
+    <a href="#home" class="nav-link">홈</a>
+    <a href="#members" class="nav-link">멤버</a>
+    <a href="#covers" class="nav-link">커버곡</a>
+    <a href="#fanart" class="nav-link">팬아트</a>
+  </nav>
+</header>
+
+<main id="app">
+  <section id="home" class="route route--active">
+    <div class="hero">
+      <h1>별처럼 빛나는 순간 ✨</h1>
+      <p>스텔라이브 아티스트들을 위한 비공식 팬 허브. 멤버 정보, 커버곡, 팬아트를 한 곳에서.</p>
+      <div class="cta">
+        <a href="#members" class="btn primary">멤버 둘러보기</a>
+        <a href="#fanart" class="btn ghost">오늘의 팬아트</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="members" class="route">
+    <h2>멤버</h2>
+    <div id="memberGrid" class="grid"></div>
+  </section>
+
+  <section id="covers" class="route">
+    <h2>커버곡 플레이리스트</h2>
+    <div id="playlistWrap" class="playlist-wrap"></div>
+    <p class="hint">플레이리스트는 각 멤버 카드를 눌러도 열 수 있어요.</p>
+  </section>
+
+  <section id="fanart" class="route">
+    <h2>오늘의 팬아트</h2>
+    <div id="fanartGrid" class="grid fanart"></div>
+    <p class="hint">이미지는 <code>/assets/images/</code>에 교체 업로드하면 자동 반영됩니다.</p>
+  </section>
+</main>
+
+<footer class="footer">
+  <span>비공식 팬 프로젝트 · 제작: You</span>
+</footer>
+
+<script src="./app.js"></script>
+</body>
+</html>
