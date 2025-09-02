@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>스텔라이브 팬 페이지</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1 data-i18n="welcome">환영합니다!</h1>
+    <nav>
+      <a href="index.html">홈</a>
+      <a href="vote.html" data-i18n="vote">투표하기</a>
+      <a href="fanart.html" data-i18n="fanart">팬아트</a>
+      <a href="cover.html">커버곡</a>
+      <a href="clips.html">클립</a>
+    </nav>
+    <select onchange="setLang(this.value)">
+      <option value="ko">한국어</option>
+      <option value="en">English</option>
+    </select>
+    <div id="g_id_onload"
+         data-client_id="1055836813442-av7ah6hlknksuon30i77ib6mitjrh7e2.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div>
+  </header>
+  <main>
+    <section>
+      <h2>공지 / 일정</h2>
+      <div id="notices">오늘은 테스트 일정입니다.</div>
+    </section>
+  </main>
+</body>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</html>
